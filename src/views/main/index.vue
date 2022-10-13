@@ -1,3 +1,9 @@
 <template>
-  <div>我是移动端首页</div>
+  <div>
+    <navigation-vue />
+  </div>
 </template>
+
+<script setup>
+  import navigationVue from './components/navigation/index.vue'
+</script>
