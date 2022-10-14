@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getSecret } from '.'
 
 const service = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_BASE_API,
   timeout: 5000  // 5s 过期
 })
 
