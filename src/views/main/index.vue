@@ -1,3 +1,4 @@
+<!-- 移动端首页 -->
 <template>
   <div>
     <navigation-vue />

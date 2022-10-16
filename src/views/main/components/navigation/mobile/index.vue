@@ -21,13 +21,16 @@
         {{ item.name }}
       </li>
     </ul>
-    <m-popup v-model="isVisable">我是内容</m-popup>
+    <m-popup v-model="isVisable">
+      <menu-vue :categorys="data" @onItemClick="onItemClick" />
+    </m-popup>
   </div>
 </template>
 
 <script setup>
   import { onBeforeUpdate, ref, watch } from 'vue'
   import { useScroll } from '@vueuse/core'
+  import MenuVue from '@/views/main/components/menu/index.vue'
 
   /**
    * defineProps 方法接收与 props 选项相同的值，以此获得 props 的完整类型推导支持
@@ -49,7 +52,10 @@
   // 选中 item 的下标
   const currentCategoryIndex = ref(0)
   // item 点击事件
-  const onItemClick = index => currentCategoryIndex.value = index
+  const onItemClick = index => {
+    currentCategoryIndex.value = index  // 切换滑动
+    isVisable.value = false  // 隐藏 popup 窗口
+  }
 
   // 获取所有的 item 元素
   let itemRefs = []
