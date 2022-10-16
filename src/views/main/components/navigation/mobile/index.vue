@@ -42,7 +42,7 @@
   // 滑块样式，改变样式进行滑动
   const sliderStyle = ref({
     transform: 'translateX(0px)',
-    width: '60px'
+    width: '52px'
   })
 
   // 选中 item 的下标
