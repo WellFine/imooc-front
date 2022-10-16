@@ -7,7 +7,7 @@
         ref="sliderTarget" :style="sliderStyle"
       ></li>
       <!-- 汉堡按钮，shadow-l-white 是在 tailwind.config.cjs 中自定义的 -->
-      <li class="fixed top-0 right-0 h-4 px-1 flex items-center bg-white z-20 shadow-l-white">
+      <li class="fixed top-0 right-0 h-4 px-1 flex items-center bg-white z-20 shadow-l-white" @click="onShowPopup">
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger" />
       </li>
       <!-- tailwind 提供 last: 来选中最后一个元素，这里为最后一个 li 添加 mr-3 -->
@@ -21,6 +21,7 @@
         {{ item.name }}
       </li>
     </ul>
+    <m-popup v-model="isVisable">我是内容</m-popup>
   </div>
 </template>
 
@@ -81,4 +82,8 @@
       width: `${width}px`
     }
   })
+
+  // 控制 popup 展示
+  const isVisable = ref(false)
+  const onShowPopup = () => isVisable.value = true
 </script>
