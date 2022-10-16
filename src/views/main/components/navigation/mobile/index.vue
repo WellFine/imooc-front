@@ -79,14 +79,20 @@
   // 通过 vueuse 提供的 useScroll 方法来获取响应式的 scroll 滚动距离
   const { x: ulScrollLeft } = useScroll(ulTarget)
 
-  // item 改变，根据其 left 和 width 以及 ul 滚动距离计算 sliderStyle
+  // item 改变，根据其 left 和 width 以及 ul 已滚动距离计算 sliderStyle 以及 ul 列表需要滚动的距离
   watch(currentCategoryIndex, val => {
     const { left, width } = itemRefs[val].getBoundingClientRect()
+    // 移动的距离 = ul 横向滚动距离 + 当前 item 的 left - ul 的 padding-left
+    const distance = ulScrollLeft.value + left - 10
+
     sliderStyle.value = {
-      // 滑块的位置 = ul 横向滚动距离 + 当前 item 的 left - ul 的 padding-left
-      transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
+      transform: `translateX(${distance}px)`,
       width: `${width}px`
     }
+
+    ulTarget.value.scrollTo({
+      left: distance
+    })
   })
 
   // 控制 popup 展示
