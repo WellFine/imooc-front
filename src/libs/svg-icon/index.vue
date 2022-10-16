@@ -1,6 +1,6 @@
 <template>
   <svg aria-hidden="true">
-    <use :xlink:href="symbolId" :fill="color" :class="fillClass" />
+    <use :href="symbolId" :fill="color" :class="fillClass" />
   </svg>
 </template>
 
@@ -13,7 +13,7 @@
       required: true
     },
     color: String,  // svg 图标颜色
-    fillClass: String  // tailwind 指定 svg 颜色的类名
+    fillClass: String  // tailwind 指定 svg 的类名
   })
 
   // 真实显示的 svg 图标，拼上 #icon- 用于 vite 处理
