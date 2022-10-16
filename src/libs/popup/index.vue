@@ -10,16 +10,16 @@
           bg-zinc-900/80 这里除以 80 代表透明度为 0.8
          -->
         <div
-          v-if="modelValue"
+          v-if="isVisable"
           class="w-screen h-screen z-40 bg-zinc-900/80 fixed top-0 left-0"
-          @click="emits('update:modelValue', false)"
+          @click="isVisable = false"
         ></div>
       </transition>
       <!-- 内容 -->
       <transition name="popup-down-up">
         <!-- 使用 popup 组件时，没有在 props 中定义的属性都会透传到内容区域 div 上 -->
         <div
-          v-if="modelValue" v-bind="$attrs"
+          v-if="isVisable" v-bind="$attrs"
           class="w-screen bg-white z-50 fixed bottom-0"
         >
           <slot />
@@ -31,7 +31,7 @@
 
 <script setup>
   import { watch } from 'vue'
-  import { useScrollLock } from '@vueuse/core'
+  import { useScrollLock, useVModel } from '@vueuse/core'
 
   const props = defineProps({
     modelValue: {
@@ -40,11 +40,14 @@
     }
   })
 
-  const emits = defineEmits(['update:modelValue'])
+  defineEmits(['update:modelValue'])
+
+  // isVisable 是一个响应式数据，当 isVisable 值发生变化时，会自动触发 update:modelValue 的 emit 修改 modelValue
+  const isVisable = useVModel(props)
 
   // 锁定滚动，通过 isLocked 响应式的锁定和解锁
   const isLocked = useScrollLock(document.body)
-  watch(() => props.modelValue, val => {
+  watch(isVisable, val => {
     isLocked.value = val  // 组件展示时锁定滚动，组件隐藏时解锁滚动
   }, {
     immediate: true  // 最开始时就希望 watch 被激活
