@@ -20,6 +20,10 @@ module.exports = {
       height: {
         header: '72px',  // PC 端 header 区域固定高度为 72px
         main: 'calc(100vh - 72px)'  // 剩下的屏幕高度都由 main 占据
+      },
+      colors: {
+        main: '#f44c58',  // 定义项目主色值
+        'hover-main': '#f32836'
       }
     },
   },
