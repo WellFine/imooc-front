@@ -1,3 +1,5 @@
 <template>
-  <div>search</div>
+  <div class="flex-grow">
+    <m-search></m-search>
+  </div>
 </template>
