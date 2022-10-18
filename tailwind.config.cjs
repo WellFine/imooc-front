@@ -16,6 +16,10 @@ module.exports = {
       },
       boxShadow: {
         'l-white': '-10px 0 10px white'
+      },
+      height: {
+        header: '72px',  // PC 端 header 区域固定高度为 72px
+        main: 'calc(100vh - 72px)'  // 剩下的屏幕高度都由 main 占据
       }
     },
   },
