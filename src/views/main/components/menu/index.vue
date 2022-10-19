@@ -5,7 +5,7 @@
       <!-- active: 用于激活状态，即触摸 item 项时背景会变灰 -->
       <li
         class="text-lg text-zinc-900 px-2 py-1.5 duration-100 active:bg-zinc-100"
-        v-for="(item, index) in categorys" :key="item.id"
+        v-for="(item, index) in $store.getters.categorys" :key="item.id"
         @click="$emit('onItemClick', index)"
       >{{ item.name }}</li>
     </ul>
@@ -13,13 +13,6 @@
 </template>
 
 <script setup>
-  defineProps({
-    categorys: {
-      type: Array,
-      required: true
-    }
-  })
-
   // vue3 中推荐所有 emit 事件都进行说明注册
   defineEmits(['onItemClick'])
 </script>

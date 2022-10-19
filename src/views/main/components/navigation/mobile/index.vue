@@ -14,7 +14,7 @@
       <li
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-3"
         :class="{ 'text-zinc-100': index === currentCategoryIndex }"
-        v-for="(item, index) in data" :key="item.id"
+        v-for="(item, index) in $store.getters.categorys" :key="item.id"
         :ref="setItemRef"
         @click="onItemClick(index)"
       >
@@ -22,7 +22,7 @@
       </li>
     </ul>
     <m-popup v-model="isVisable">
-      <menu-vue :categorys="data" @onItemClick="onItemClick" />
+      <menu-vue @onItemClick="onItemClick" />
     </m-popup>
   </div>
 </template>
@@ -31,17 +31,6 @@
   import { onBeforeUpdate, ref, watch } from 'vue'
   import { useScroll } from '@vueuse/core'
   import MenuVue from '@/views/main/components/menu/index.vue'
-
-  /**
-   * defineProps 方法接收与 props 选项相同的值，以此获得 props 的完整类型推导支持
-   * 该方法只能在 <script setup> 单文件组件中使用，可以直接使用无需导入
-   */
-  defineProps({
-    data: {
-      type: Array,
-      required: true
-    }
-  })
 
   // 滑块样式，改变样式进行滑动
   const sliderStyle = ref({
