@@ -38,6 +38,9 @@
     PROP_BOTTOM_LEFT,
     PROP_BOTTOM_RIGHT
   ]
+
+  // 气泡延迟关闭时间，单位 ms
+  const DELAY_TIME = 200
 </script>
 <script setup>
   import { nextTick, ref, watch } from 'vue'
@@ -55,13 +58,20 @@
   })
 
   const isVisable = ref(false)
+
+  let timer = null
+
   // 鼠标移入事件
   const onMouseenter = () => {
+    if (timer) clearTimeout(timer)
     isVisable.value = true
   }
   // 鼠标移出事件
   const onMouseleave = () => {
-    isVisable.value = false
+    timer = setTimeout(() => {
+      isVisable.value = false
+      timer = null
+    }, DELAY_TIME)
   }
 
   // 具名插槽父级 div
