@@ -4,5 +4,6 @@
  */
 export default {
   // state.category.categorys 表示 store 中 category 模块下的 categorys state
-  categorys: state => state.category.categorys
+  categorys: state => state.category.categorys,
+  themeType: state => state.theme.themeType
 }
