@@ -1,6 +1,6 @@
 <template>
   <!-- 父元素添加 group 类，子元素添加 group-hover: 前缀可以让鼠标悬停在父元素上时对子元素设置样式 -->
-  <div class="group relative p-0.5 rounded-xl border-white duration-500 hover:bg-red-100/40" ref="containerTarget">
+  <div class="group relative p-0.5 rounded-xl border-white dark:border-zinc-200 duration-500 hover:bg-red-100/40" ref="containerTarget">
     <div>
       <!-- 搜索图标 -->
       <m-svg-icon class="w-1.5 h-1.5 absolute top-[50%] translate-y-[-50%] left-2" name="search" />
@@ -10,7 +10,7 @@
         group-hover: 表示 div.group 进入 hover 状态时执行
        -->
       <input
-        class="block w-full h-[44px] pl-4 outline-0 bg-zinc-100 caret-zinc-400 rounded-xl text-zinc-900 tracking-wide text-sm font-semibold border border-zinc-100 duration-500 focus:border-red-300 group-hover:bg-white group-hover:border-zinc-200"
+        class="block w-full h-[44px] pl-4 outline-0 bg-zinc-100 dark:bg-zinc-800 caret-zinc-400 rounded-xl text-zinc-900 dark:text-zinc-200 tracking-wide text-sm font-semibold border border-zinc-100 dark:border-zinc-700 duration-500 focus:border-red-300 group-hover:bg-white dark:group-hover:bg-zinc-900 group-hover:border-zinc-200 dark:group-hover:border-zinc-700"
         type="text" placeholder="搜索"
         v-model="inputValue" @keyup.enter="onSearchHandler"
         @focus="onFocusHandler" @blur="onBlurHandler"
@@ -35,7 +35,7 @@
       <!-- 只有调用者用了 dropdown 插槽，并且 input 获得了焦点才展示 -->
       <div
         v-if="$slots.dropdown" v-show="isFocus"
-        class="max-h-[368px] w-full text-base overflow-auto bg-white absolute left-0 top-[56px] z-20 p-2 rounded border border-zinc-200 duration-200 hover:shadow-2xl"
+        class="max-h-[368px] w-full text-base overflow-auto bg-white dark:bg-zinc-800 absolute left-0 top-[56px] z-20 p-2 rounded border border-zinc-200 dark:border-zinc-600 duration-200 hover:shadow-2xl"
       >
         <slot name="dropdown" />
       </div>

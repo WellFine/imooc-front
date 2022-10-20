@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-white sticky top-0 left-0 z-10">
+  <div class="bg-white dark:bg-zinc-900 sticky top-0 left-0 z-10">
     <ul class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden" ref="ulTarget">
       <!-- 滑块，h-[22px] 表示 height: 22px;，这是在预设值不满足时的一种自定义写法 -->
       <li
-        class="absolute h-[22px] bg-zinc-900 rounded-lg duration-200"
+        class="absolute h-[22px] bg-zinc-900 dark:bg-zinc-800 rounded-lg duration-200"
         ref="sliderTarget" :style="sliderStyle"
       ></li>
-      <!-- 汉堡按钮，shadow-l-white 是在 tailwind.config.cjs 中自定义的 -->
-      <li class="fixed top-0 right-0 h-4 px-1 flex items-center bg-white z-20 shadow-l-white" @click="onShowPopup">
+      <!-- 汉堡按钮，shadow-l-white 和 shadow-l-zinc 是在 tailwind.config.cjs 中自定义的 -->
+      <li class="fixed top-0 right-0 h-4 px-1 flex items-center bg-white dark:bg-zinc-900 z-20 shadow-l-white dark:shadow-l-zinc" @click="onShowPopup">
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger" />
       </li>
       <!-- tailwind 提供 last: 来选中最后一个元素，这里为最后一个 li 添加 mr-3 -->

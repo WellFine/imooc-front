@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-white border-b border-zinc-200 px-2 py-1">
+  <div class="w-full bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-2 py-1">
     <div class="flex items-center">
       <img class="h-4 cursor-pointer mr-2" src="https://m.imooc.com/static/wap/static/common/img/logo-small@2x.png" @click="goToHome" />
       <header-search-vue />

@@ -15,7 +15,8 @@ module.exports = {
         xl: ['0.65rem', '0.75rem']
       },
       boxShadow: {
-        'l-white': '-10px 0 10px white'
+        'l-white': '-10px 0 10px white',
+        'l-zinc': '-10px 0 10px #18181b'
       },
       height: {
         header: '72px',  // PC 端 header 区域固定高度为 72px
@@ -27,6 +28,6 @@ module.exports = {
       }
     },
   },
-  darkMode: 'class',
+  darkMode: 'class',  // 手动切换 dark 模式
   plugins: [],
 }
