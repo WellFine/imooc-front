@@ -20,7 +20,8 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, onMounted, watch, nextTick } from 'vue'
+  import { getImgElements, getAllImg, onCompleteImgs } from './utils'
 
   const props = defineProps({
     data: {  // 数据源
@@ -82,6 +83,59 @@
     useContainerWidth()  // 计算容器宽度
     columnWidth.value = parseFloat((containerWidth.value - columnSpacingTotal.value) / props.column)
   }
+
+  // item 高度集合
+  let itemHeights = []
+  // 需要图片预加载时图片高度未知，监听图片加载完成来获取高度
+  const waitImgComplete = () => {
+    itemHeights = []
+    // 用预留的类名拿到所有 item 元素
+    const itemElements = [...document.querySelectorAll('.m-waterfall-item')]
+    // 获取所有元素对应的 img 标签
+    const imgElements = getImgElements(itemElements)
+    // 获取所有 img 标签的图片链接
+    const allImgs = getAllImg(imgElements)
+    // 等待图片加载完成
+    onCompleteImgs(allImgs).then(() => {
+      // 图片加载完成
+      itemElements.forEach(el => {
+        itemHeights.push(el.offsetHeight)
+      })
+      // 渲染位置
+      useItemLocation()
+    })
+  }
+
+  // 不需要图片预加载
+  const useImgHeight = () => {
+    itemHeights = []
+    // 用预留的类名拿到所有 item 元素
+    const itemElements = [...document.querySelectorAll('.m-waterfall-item')]
+    // 不需要图片预加载时图片高度已知，直接拿即可
+    itemElements.forEach(el => {
+      itemHeights.push(el.offsetHeight)
+    })
+    // 渲染位置
+    useItemLocation()
+  }
+
+  // 渲染 item 位置
+  const useItemLocation = () => {
+    console.log(itemHeights)
+  }
+
+  // 触发计算
+  watch(() => props.data, val => {
+    if (val.length) {
+      nextTick(() => {
+        if (props.picturePreReading) waitImgComplete()
+        else useImgHeight()
+      })
+    }
+  }, {
+    deep: true,  // props.data 是数组，进行深度监听
+    immediate: true
+  })
 
   onMounted(() => {
     useColumnWidth()  // 计算列宽
