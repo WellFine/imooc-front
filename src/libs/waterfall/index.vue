@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watch, nextTick } from 'vue'
-  import { getImgElements, getAllImg, onCompleteImgs } from './utils'
+  import { ref, computed, onMounted, watch, nextTick, onUnmounted } from 'vue'
+  import { getImgElements, getAllImg, onCompleteImgs, getMinHeight, getMaxHeight, getMinHeightColumn } from './utils'
 
   const props = defineProps({
     data: {  // 数据源
@@ -73,7 +73,7 @@
   }
 
   // 列宽 = (容器宽度 - 所有列间距宽度) / 列数
-  const columnWidth = ref(1)
+  const columnWidth = ref(0)
   // 列间距总宽度
   const columnSpacingTotal = computed(() => {
     return (props.column - 1) * props.columnSpacing
@@ -88,9 +88,8 @@
   let itemHeights = []
   // 需要图片预加载时图片高度未知，监听图片加载完成来获取高度
   const waitImgComplete = () => {
-    itemHeights = []
     // 用预留的类名拿到所有 item 元素
-    const itemElements = [...document.querySelectorAll('.m-waterfall-item')]
+    const itemElements = document.querySelectorAll('.m-waterfall-item')
     // 获取所有元素对应的 img 标签
     const imgElements = getImgElements(itemElements)
     // 获取所有 img 标签的图片链接
@@ -98,6 +97,7 @@
     // 等待图片加载完成
     onCompleteImgs(allImgs).then(() => {
       // 图片加载完成
+      itemHeights = []
       itemElements.forEach(el => {
         itemHeights.push(el.offsetHeight)
       })
@@ -110,7 +110,7 @@
   const useImgHeight = () => {
     itemHeights = []
     // 用预留的类名拿到所有 item 元素
-    const itemElements = [...document.querySelectorAll('.m-waterfall-item')]
+    const itemElements = document.querySelectorAll('.m-waterfall-item')
     // 不需要图片预加载时图片高度已知，直接拿即可
     itemElements.forEach(el => {
       itemHeights.push(el.offsetHeight)
@@ -121,12 +121,48 @@
 
   // 渲染 item 位置
   const useItemLocation = () => {
-    console.log(itemHeights)
+    props.data.forEach((item, index) => {
+      if (item._style) return  // 避免重复计算
+      item._style = {
+        top: getItemTop(),
+        left: getItemLeft()
+      }
+      // 让 item 插入的列高度增加
+      increasingHeight(index)
+    })
+    // 所有 item 位置计算好后，指定容器高度，也就是最大列高度
+    containerHeight.value = getMaxHeight(columnHeightObj.value)
+  }
+
+  // 返回当前要排列 item 的 top
+  const getItemTop = () => {
+    // top = 最小高度列高度
+    return getMinHeight(columnHeightObj.value)
+  }
+
+  // 返回当前要排列 item 的 left
+  const getItemLeft = () => {
+    // 拿到最小高度的列下标，item 将插入到该列下
+    const column = getMinHeightColumn(columnHeightObj.value)
+    // left = 列下标值（表示前面有多少列）*（列宽度 + 列间距） + 容器左边距
+    return column * (columnWidth.value + props.columnSpacing) + containerLeft.value
+  }
+  
+  // 让 item 插入的最小高度列高度增加
+  const increasingHeight = index => {
+    // 最小高度列下标
+    const minHeightColumn = getMinHeightColumn(columnHeightObj.value)
+    // 增加值为 item 高度 + 行间距
+    columnHeightObj.value[minHeightColumn] += (itemHeights[index] + props.rowSpacing)
   }
 
   // 触发计算
   watch(() => props.data, val => {
     if (val.length) {
+      // 第一次获取数据时，构建高度记录容器
+      const resetColumnHeight = val.every(item => !item._style)
+      if (resetColumnHeight) useColumnHeightObj()
+
       nextTick(() => {
         if (props.picturePreReading) waitImgComplete()
         else useImgHeight()
@@ -139,5 +175,10 @@
 
   onMounted(() => {
     useColumnWidth()  // 计算列宽
+  })
+  onUnmounted(() => {
+    props.data.forEach(item => {
+      delete item._style  // 组件销毁时，消除所有 _style
+    })
   })
 </script>

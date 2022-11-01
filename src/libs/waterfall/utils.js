@@ -26,3 +26,21 @@ export const onCompleteImgs = imgs => {
   })
   return Promise.all(promiseAll)
 }
+
+// 返回列高对象中最小的高度
+export const getMinHeight = columnHeightObj => {
+  const columnHeightArr = Object.values(columnHeightObj)
+  return Math.min(...columnHeightArr)
+}
+
+// 返回列高对象中最大的高度
+export const getMaxHeight = columnHeightObj => {
+  const columnHeightArr = Object.values(columnHeightObj)
+  return Math.max(...columnHeightArr)
+}
+
+// 返回列高对象中最小高度所在的列下标
+export const getMinHeightColumn = columnHeightObj => {
+  const minHeight = getMinHeight(columnHeightObj)
+  return Object.keys(columnHeightObj).find(key => columnHeightObj[key] === minHeight)
+}
