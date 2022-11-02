@@ -3,10 +3,10 @@
     <m-waterfall
       class="w-full px-1"
       :data="pexelsList" nodeKey="id"
-      :column="isMobileTerminal ? 2 : 5" :picturePreReading="true"
+      :column="isMobileTerminal ? 2 : 5" :picturePreReading="false"
     >
-      <template v-slot="{ item }">
-        <item-vue :data="item" />
+      <template v-slot="{ item, width }">
+        <item-vue :data="item" :width="width" />
       </template>
     </m-waterfall>
   </div>
