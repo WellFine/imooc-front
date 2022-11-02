@@ -3,7 +3,7 @@
     <template #reference>
       <div class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900">
         <!-- 头像 -->
-        <img class="w-3 h-3 rounded-sm" src="https://blog.xqtcat.cn/images/logo.jpg" />
+        <img v-lazy class="w-3 h-3 rounded-sm" src="https://blog.xqtcat.cn/images/logo.jpg" />
         <!-- 箭头 -->
         <m-svg-icon class="h-1 w-1 ml-0.5" name="down-arrow" fillClass="fill-zinc-900 dark:fill-zinc-300" />
         <!-- vip 图标 -->
