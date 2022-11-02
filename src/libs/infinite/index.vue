@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { nextTick, ref, watch } from 'vue'
   import { useVModel, useIntersectionObserver } from '@vueuse/core'
 
   const props = defineProps({
@@ -37,11 +37,28 @@
 
   // 长列表底部的视图元素
   const loadingTarget = ref(null)
+  // 底部视图元素是否可见
+  const targetIsIntersecting = ref(false)
   useIntersectionObserver(loadingTarget, ([{ isIntersecting }]) => {
-    // 当长列表触底，同时 loading 为 false 且数据尚未全部加载完成时，处理加载更多的逻辑
-    if (isIntersecting && !loading.value && !props.isFinished) {
-      loading.value = true  // 修改加载状态
-      emits('load')  // 触发加载行为
-    }
+    targetIsIntersecting.value = isIntersecting
+    emitLoad()
   })
+  
+  const emitLoad = () => {
+    /**
+     * 获取数据后会改变 loading 状态，这里先延迟一会让数据渲染先完成
+     * 看首屏是否铺满改变 targetIsIntersecting 值
+     * 防止获取数据后未铺满，而 targetIsIntersecting 值依旧为 true，而 loading 改为 false 后再次获取数据
+     */
+    setTimeout(() => {
+      // 当长列表触底，同时 loading 为 false 且数据尚未全部加载完成时，处理加载更多的逻辑
+      if (targetIsIntersecting.value && !loading.value && !props.isFinished) {
+        loading.value = true  // 修改加载状态
+        emits('load')  // 触发加载行为
+      }
+    }, 100)
+  }
+
+  // 监听 loading 变化，解决数据加载完成后首屏未铺满问题
+  watch(loading, emitLoad)
 </script>
