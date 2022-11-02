@@ -1,7 +1,9 @@
 <template>
   <div class="h-screen">
     <header-vue class="h-header" />
-    <main-vue class="h-main" />
+    <div class="h-main">
+      <main-vue />
+    </div>
     <floating-vue />
   </div>
 </template>
