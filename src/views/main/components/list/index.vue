@@ -1,8 +1,9 @@
 <template>
   <div>
     <m-waterfall
+      class="w-full px-1"
       :data="pexelsList" nodeKey="id"
-      :column="5" :picturePreReading="true"
+      :column="isMobileTerminal ? 2 : 5" :picturePreReading="true"
     >
       <template v-slot="{ item }">
         <item-vue :data="item" />
@@ -14,6 +15,7 @@
 <script setup>
   import { ref } from 'vue'
   import { getPexelsList } from '@/api/pexels'
+  import { isMobileTerminal } from '@/utils/flexible'
   import itemVue from './item.vue'
 
   const pexelsList = ref([])

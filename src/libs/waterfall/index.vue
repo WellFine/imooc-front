@@ -173,6 +173,22 @@
     immediate: true
   })
 
+  // 重新构建瀑布流
+  const reset = () => {
+    setTimeout(() => {
+      useColumnWidth()  // 重新计算列宽
+      props.data.forEach(item => {  // 重置定位数据，重置后监听 props.data 的 watch 会重新触发，计算定位数据
+        item._style = null
+      })
+    }, 100)
+  }
+
+  // 监听列数变化，重新计算 item 位置以实现响应式效果
+  watch(() => props.column, () => {
+    columnWidth.value = 0  // 将列宽置为空使模板消失显示加载中
+    reset()
+  })
+
   onMounted(() => {
     useColumnWidth()  // 计算列宽
   })
