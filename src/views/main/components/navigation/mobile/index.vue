@@ -13,10 +13,10 @@
       <!-- tailwind 提供 last: 来选中最后一个元素，这里为最后一个 li 添加 mr-3 -->
       <li
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-3"
-        :class="{ 'text-zinc-100': index === currentCategoryIndex }"
+        :class="{ 'text-zinc-100': index === $store.getters.currentCategoryIndex }"
         v-for="(item, index) in $store.getters.categorys" :key="item.id"
         :ref="setItemRef"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -29,6 +29,7 @@
 
 <script setup>
   import { onBeforeUpdate, ref, watch } from 'vue'
+  import { useStore } from 'vuex'
   import { useScroll } from '@vueuse/core'
   import MenuVue from '@/views/main/components/menu/index.vue'
 
@@ -38,11 +39,10 @@
     width: '52px'
   })
 
-  // 选中 item 的下标
-  const currentCategoryIndex = ref(0)
+  const store = useStore()
   // item 点击事件
-  const onItemClick = index => {
-    currentCategoryIndex.value = index  // 切换滑动
+  const onItemClick = item => {
+    store.commit('app/changeCurrentCategory', item)
     isVisable.value = false  // 隐藏 popup 窗口
   }
 
@@ -69,7 +69,7 @@
   const { x: ulScrollLeft } = useScroll(ulTarget)
 
   // item 改变，根据其 left 和 width 以及 ul 已滚动距离计算 sliderStyle 以及 ul 列表需要滚动的距离
-  watch(currentCategoryIndex, val => {
+  watch(() => store.getters.currentCategoryIndex, val => {
     const { left, width } = itemRefs[val].getBoundingClientRect()
     // 移动的距离 = ul 横向滚动距离 + 当前 item 的 left - ul 的 padding-left
     const distance = ulScrollLeft.value + left - 10

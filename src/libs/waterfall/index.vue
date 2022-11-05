@@ -158,16 +158,14 @@
 
   // 触发计算
   watch(() => props.data, val => {
-    if (val.length) {
-      // 第一次获取数据时，构建高度记录容器
-      const resetColumnHeight = val.every(item => !item._style)
-      if (resetColumnHeight) useColumnHeightObj()
+    // 第一次获取数据时，构建高度记录容器
+    const resetColumnHeight = val.every(item => !item._style)
+    if (resetColumnHeight) useColumnHeightObj()
 
-      nextTick(() => {
-        if (props.picturePreReading) waitImgComplete()
-        else useImgHeight()
-      })
-    }
+    nextTick(() => {
+      if (props.picturePreReading) waitImgComplete()
+      else useImgHeight()
+    })
   }, {
     deep: true,  // props.data 是数组，进行深度监听
     immediate: true

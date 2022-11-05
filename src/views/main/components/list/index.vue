@@ -15,14 +15,15 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
+  import { useStore } from 'vuex'
   import { getPexelsList } from '@/api/pexels'
   import { isMobileTerminal } from '@/utils/flexible'
   import itemVue from './item.vue'
 
   const pexelsList = ref([])
   // 构建请求参数
-  const query = {
+  let query = {
     page: 1,
     size: 20
   }
@@ -46,4 +47,20 @@
     // loading 变为 true 的逻辑在 infinite 组件中，长列表触底时触发
     loading.value = false
   }
+
+  // 修改请求参数，重置状态
+  const resetQuery = newQuery => {
+    query = { ...query, ...newQuery }
+    isFinished.value = false  // 重置状态
+    // 列表清空后瀑布流组件没有数据支撑，导致长列表组件触发触底操作，从而 emit 了 load 事件，调用 getPexelsData 请求数据
+    pexelsList.value = []
+  }
+
+  const store = useStore()
+  watch(() => store.getters.currentCategory, val => {
+    resetQuery({
+      page: 1,
+      categoryId: val.id
+    })
+  })
 </script>

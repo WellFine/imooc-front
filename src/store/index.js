@@ -6,12 +6,14 @@ import createPersistedState from 'vuex-persistedstate'
 import getters from './getters'
 import category from './modules/category'
 import theme from './modules/theme'
+import app from './modules/app'
 
 const store = createStore({
   getters,
   modules: {
     category,
-    theme
+    theme,
+    app  // app 中的内容不需要缓存
   },
   plugins: [
     createPersistedState({  // 使用这个 plugin 后会自动到 localStorage 中加载对应模块的缓存数据
