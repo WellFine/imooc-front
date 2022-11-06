@@ -9,5 +9,6 @@ export default {
   currentCategory: state => state.app.currentCategory,  // navigation 选中 item 项
   currentCategoryIndex: (state, getters) => {  // navigation 选中项 index
     return getters.categorys.findIndex(item => item.id === getters.currentCategory.id)
-  }
+  },
+  historys: state => state.search.historys
 }
