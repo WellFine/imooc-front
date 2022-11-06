@@ -1,5 +1,7 @@
 import { defineAsyncComponent } from 'vue'
 
+export { confirm } from './confirm/index'
+
 export default {
   install (app) {
     // 获取所有通用组件的 index.vue，import.meta.glob 是 vite 提供的

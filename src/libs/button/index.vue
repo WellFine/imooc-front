@@ -48,6 +48,12 @@
 </script>
 <script setup>
   import { computed } from 'vue'
+  /**
+   * confirm 组件通过方法调用展示时，需要主动导入组件
+   * confirm 用到的 button 组件中，用到了 svg-icon 组件
+   * 所以需要在 button 这里主动导入 svg-icon 组件
+   */
+  import mSvgIcon from '../svg-icon/index.vue'
 
   const props = defineProps({
     icon: String,  // icon 图标
