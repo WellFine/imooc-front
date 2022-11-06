@@ -7,6 +7,8 @@
           <hint-vue v-show="inputValue" :searchText="inputValue" @itemClick="onSearchHandler" />
           <!-- 搜索记录 -->
           <history-vue v-show="!inputValue" @itemClick="onSearchHandler" />
+          <!-- 推荐主题 -->
+          <theme-vue v-show="!inputValue" />
         </div>
       </template>
     </m-search>
@@ -18,6 +20,7 @@
   import { useStore } from 'vuex'
   import hintVue from './hint.vue'
   import historyVue from './history.vue'
+  import themeVue from './theme.vue'
 
   const store = useStore()
   const inputValue = ref('')

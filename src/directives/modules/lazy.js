@@ -10,7 +10,9 @@ export default {
     const { stop } = useIntersectionObserver(el, ([{ isIntersecting }]) => {
       if (isIntersecting) {
         el.src = imgSrc  // 图片可见时加载图片
-        el.style.backgroundColor = ''
+        el.onload = () => {  // 图片加载完成后重置背景颜色
+          el.style.backgroundColor = ''
+        }
         stop()  // 停止监听 img 是否可见
       }
     })
