@@ -11,6 +11,7 @@
 <script setup>
   import { ref, watch } from 'vue-demi'
   import { getHint } from '@/api/pexels'
+  import { watchDebounced } from '@vueuse/core'
 
   const props = defineProps({
     searchText: {
@@ -28,8 +29,24 @@
     hintData.value = result
   }
 
-  watch(() => props.searchText, getHintData, {
-    immediate: true
+  // const debounce = (fn, delay) => {
+  //   let timer = null
+  //   return function () {
+  //     if (timer) clearTimeout(timer)
+  //     timer = setTimeout(function () {
+  //       fn()
+  //       timer = null
+  //     }, delay)
+  //   }
+  // }
+
+  // watch(() => props.searchText, debounce(getHintData, 500), {
+  //   immediate: true
+  // })
+
+  watchDebounced(() => props.searchText, getHintData, {
+    immediate: true,
+    debounce: 500
   })
 
   const onItemClick = item => {
