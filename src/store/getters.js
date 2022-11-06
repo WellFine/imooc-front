@@ -10,5 +10,6 @@ export default {
   currentCategoryIndex: (state, getters) => {  // navigation 选中项 index
     return getters.categorys.findIndex(item => item.id === getters.currentCategory.id)
   },
-  historys: state => state.search.historys
+  historys: state => state.search.historys,  // 搜索历史记录
+  searchText: state => state.app.searchText  // 搜索文本
 }

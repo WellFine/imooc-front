@@ -27,6 +27,9 @@
 
   const onSearchHandler = val => {
     inputValue.value = val
-    if (val) store.commit('search/addHistory', val)
+    if (val) {
+      store.commit('search/addHistory', val)
+      store.commit('app/changeSearchText', val)
+    }
   }
 </script>
