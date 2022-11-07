@@ -21,6 +21,7 @@
           class="absolute bottom-1.5 left-1.5 bg-zinc-100/70"
           type="info" size="small"
           icon="download" iconClass="fill-zinc-900 dark:bg-zinc-200"
+          @click="onDownload"
         />
         <!-- 全屏 -->
         <m-button
@@ -41,11 +42,18 @@
 </template>
 
 <script setup>
-  defineProps({
+  import { saveAs } from 'file-saver'
+
+  const props = defineProps({
     data: {
       type: Object,
       required: true
     },
     width: Number  // item 每列的宽度
   })
+
+  const onDownload = () => {
+    // saveAs 传入图片链接即可下载图片
+    saveAs(props.data.photoDownLink)
+  }
 </script>
