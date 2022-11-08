@@ -35,9 +35,16 @@ module.exports = {
         'error-100': '#ED7456',
         'error-200': '#f3471c',
         'error-300': '#ffffff'
+      },
+      variants: {
+        // 默认情况下 scrollbar 不支持暗黑模式，在这里进行配置
+        scrollbar: ['dark']
       }
     },
   },
   darkMode: 'class',  // 手动切换 dark 模式
-  plugins: [],
+  plugins: [
+    // tailwind-scrollbar 2.x 版本设置 nocompatible 开启圆角滚动条，只在基于 webkit 的浏览器下生效
+    require('tailwind-scrollbar')({ nocompatible: true })
+  ],
 }

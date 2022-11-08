@@ -35,7 +35,7 @@
       <!-- 只有调用者用了 dropdown 插槽，并且 input 获得了焦点才展示 -->
       <div
         v-if="$slots.dropdown" v-show="isFocus"
-        class="max-h-[368px] w-full text-base overflow-auto bg-white dark:bg-zinc-800 absolute left-0 top-[56px] z-20 p-2 rounded border border-zinc-200 dark:border-zinc-600 duration-200 hover:shadow-2xl"
+        class="max-h-[368px] w-full text-base overflow-auto bg-white dark:bg-zinc-800 absolute left-0 top-[56px] z-20 p-2 rounded border border-zinc-200 dark:border-zinc-600 duration-200 hover:shadow-2xl scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-transparent xl:scrollbar-thumb-zinc-200 xl:dark:scrollbar-thumb-zinc-900 scrollbar-track-transparent"
       >
         <slot name="dropdown" />
       </div>
