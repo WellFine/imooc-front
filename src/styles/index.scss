@@ -2,3 +2,15 @@
 @tailwind base;  // 基础
 @tailwind components;  // 组件
 @tailwind utilities;  // 工具
+
+/*
+  driver.js 会给引导元素添加 relative 定位以及高 z-index
+  同时会给引导元素外层添加 .driver-fix-stacking 类
+  在这个类加上定位即可让引导元素显示，定位一般是 relative，如果引导元素外层本身有定位如 fixed，那么加的就是 fixed
+ */
+ .driver-fix-stacking {
+  position: relative;
+}
+.driver-navigation-btns {
+  line-height: 0;  // 让关闭按钮和上一步下一步按钮同一行显示
+}

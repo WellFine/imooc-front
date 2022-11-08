@@ -46,3 +46,10 @@
     driver.start()  // 开始引导
   }
 </script>
+
+<style lang="scss" scoped>
+  .driver-fix-stacking {
+    position: fixed;  // 该组件中引导元素外层是固定定位
+    z-index: 100004 !important;
+  }
+</style>
