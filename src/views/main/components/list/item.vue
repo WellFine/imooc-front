@@ -3,7 +3,7 @@
     <!-- 图片区域 -->
     <div class="relative w-full rounded cursor-zoom-in group">
       <img
-        v-lazy
+        v-lazy ref="imgTarget"
         class="w-full rounded bg-transparent" :src="data.photo"
         :style="{ height: `${(width / data.photoWidth) * data.photoHeight}px` }"
       />
@@ -28,6 +28,7 @@
           class="absolute bottom-1.5 right-1.5 bg-zinc-100/70"
           type="info" size="small"
           icon="full" iconClass="fill-zinc-900 dark:fill-zinc-200"
+          @click="onImgFullScreen"
         />
       </div>
     </div>
@@ -42,8 +43,10 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue'
   import { saveAs } from 'file-saver'
   import { message } from '@/libs'
+  import { useFullscreen } from '@vueuse/core'
 
   const props = defineProps({
     data: {
@@ -60,4 +63,7 @@
       saveAs(props.data.photoDownLink)
     }, 150)
   }
+
+  const imgTarget = ref(null)
+  const { enter: onImgFullScreen } = useFullscreen(imgTarget)
 </script>
