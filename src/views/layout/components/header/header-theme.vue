@@ -1,5 +1,5 @@
 <template>
-  <m-popover placement="bottom_left">
+  <m-popover class="guide-theme" placement="bottom_left">
     <!-- 具名插槽：触发弹层的媒介 -->
     <template #reference>
       <m-svg-icon

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-2 py-1 duration-500">
     <div class="flex items-center">
-      <img v-lazy class="h-4 cursor-pointer mr-2" src="https://m.imooc.com/static/wap/static/common/img/logo-small@2x.png" @click="goToHome" />
+      <img v-lazy class="guide-home h-4 cursor-pointer mr-2" src="https://blog.xqtcat.cn/images/logo.jpg" @click="goToHome" />
       <header-search-vue />
       <header-theme-vue class="mx-1" />
       <header-my-vue />
