@@ -43,6 +43,7 @@
 
 <script setup>
   import { saveAs } from 'file-saver'
+  import { message } from '@/libs'
 
   const props = defineProps({
     data: {
@@ -53,7 +54,10 @@
   })
 
   const onDownload = () => {
+    message('success', '开始下载图片')
     // saveAs 传入图片链接即可下载图片
-    saveAs(props.data.photoDownLink)
+    setTimeout(() => {  // 延迟一会再下载，让用户看到提示，体验更好
+      saveAs(props.data.photoDownLink)
+    }, 150)
   }
 </script>
