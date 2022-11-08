@@ -24,7 +24,17 @@ module.exports = {
       },
       colors: {
         main: '#f44c58',  // 定义项目主色值
-        'hover-main': '#f32836'
+        'hover-main': '#f32836',  // hover 时主色
+        // 以下为 message 组件的自定义色值
+        'success-100': '#F2F9EC',
+        'success-200': '#E4F2DB',
+        'success-300': '#7EC050',
+        'warn-100': '#FCF6ED',
+        'warn-200': '#F8ECDA',
+        'warn-300': '#DCA550',
+        'error-100': '#ED7456',
+        'error-200': '#f3471c',
+        'error-300': '#ffffff'
       }
     },
   },
