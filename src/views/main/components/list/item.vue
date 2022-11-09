@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
     <!-- 图片区域 -->
-    <div class="relative w-full rounded cursor-zoom-in group">
+    <div class="relative w-full rounded cursor-zoom-in group" @click="onToPinsClick">
       <img
         v-lazy ref="imgTarget"
         class="w-full rounded bg-transparent" :src="data.photo"
@@ -56,6 +56,8 @@
     width: Number  // item 每列的宽度
   })
 
+  const emits = defineEmits(['click'])
+
   const onDownload = () => {
     message('success', '开始下载图片')
     // saveAs 传入图片链接即可下载图片
@@ -66,4 +68,11 @@
 
   const imgTarget = ref(null)
   const { enter: onImgFullScreen } = useFullscreen(imgTarget)
+
+  const onToPinsClick = () => {
+    // item 有很多，传递点击事件到 list/index.vue 中统一处理
+    emits('click', {
+      id: props.data.id
+    })
+  }
 </script>

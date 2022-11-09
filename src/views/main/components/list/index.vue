@@ -7,7 +7,7 @@
         :column="isMobileTerminal ? 2 : 5" :picturePreReading="false"
       >
         <template v-slot="{ item, width }">
-          <item-vue :data="item" :width="width" />
+          <item-vue :data="item" :width="width" @click="onToPins" />
         </template>
       </m-waterfall>
     </m-infinite>
@@ -69,4 +69,9 @@
       searchText: val
     })
   })
+
+  const onToPins = item => {
+    // 修改浏览器的 url，但不会加载 url
+    history.pushState(null, null, `/pins/${item.id}`)
+  }
 </script>
