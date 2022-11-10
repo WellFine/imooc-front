@@ -15,7 +15,7 @@
     />
     <!-- 内容详情，pexelsData 有值时渲染 -->
     <div v-if="pexelsData.title" class="xl:w-[80%] xl:h-full xl:m-auto xl:rounded-lg xl:flex">
-      <img class="w-screen xl:w-3/5 xl:h-full mb-2 xl:rounded-tl-lg xl:rounded-bl-lg" :src="pexelsData.photo" />
+      <img class="w-screen xl:w-3/5 xl:h-full mb-2 xl:rounded-tl-lg xl:rounded-bl-lg xl:object-contain xl:bg-white xl:dark:bg-zinc-900 xl:border-r xl:border-zinc-200 xl:dark:border-zinc-700" :src="pexelsData.photo" />
       <div class="xl:w-2/5 xl:h-full xl:bg-white xl:dark:bg-zinc-900 xl:rounded-tr-lg xl:rounded-br-lg xl:p-3">
         <!-- PC 端下分享与收藏 -->
         <div v-if="!isMobileTerminal" class="flex justify-between items-center mb-2">
