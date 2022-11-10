@@ -36,6 +36,9 @@ module.exports = {
         'error-200': '#f3471c',
         'error-300': '#ffffff'
       },
+      backdropBlur: {
+        '4xl': '240px'  // 高斯模糊
+      },
       variants: {
         // 默认情况下 scrollbar 不支持暗黑模式，在这里进行配置
         scrollbar: ['dark']
