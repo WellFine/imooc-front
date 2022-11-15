@@ -1,7 +1,7 @@
 <template>
   <m-popover class="guide-my flex items-center" placement="bottom_left">
     <template #reference>
-      <div class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900">
+      <div v-if="false" class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900">
         <!-- 头像 -->
         <img v-lazy class="w-3 h-3 rounded-sm" src="https://blog.xqtcat.cn/images/logo.jpg" />
         <!-- 箭头 -->
@@ -9,9 +9,12 @@
         <!-- vip 图标 -->
         <m-svg-icon class="h-1.5 w-1.5 absolute right-[16px] bottom-0" name="vip" />
       </div>
+      <div v-else>
+        <m-button icon="profile" iconColor="#fff" @click="goToLogin" />
+      </div>
     </template>
-    <!-- 气泡 -->
-    <div class="w-[140px] overflow-hidden">
+    <!-- 气泡，用户未登录时鼠标移入不显示 -->
+    <div v-if="false" class="w-[140px] overflow-hidden">
       <div
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-900"
         v-for="item in menuArr" :key="item.id"
@@ -24,9 +27,17 @@
 </template>
 
 <script setup>
+  import { useRouter } from 'vue-router'
+
   const menuArr = [
     { id: '0', title: '个人资料', icon: 'profile', path: '/profile' },
     { id: '1', title: '升级 VIP', icon: 'vip-profile', path: '/member' },
     { id: '2', title: '退出登录', icon: 'logout', path: '' }
   ]
+
+  const router = useRouter()
+
+  const goToLogin = () => {
+    router.push('/login')
+  }
 </script>
