@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getSecret } from '.'
+import store from '@/store'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
@@ -11,10 +12,11 @@ service.interceptors.request.use(config => {
   const headers = config.headers || {}
   config.headers = {
     ...headers,
+    Authorization: `Bearer ${store.getters.token}`,
     ...getSecret()  // 配置 icode 和 codetype
   }
   return config  // 设置后记得返回 config
-})
+}, err => Promise.reject(err))
 
 /**
  * 响应拦截器

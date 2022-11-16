@@ -1,5 +1,7 @@
 import md5 from 'md5'
 import { loginUser } from '@/api/sys'
+import { getProfile } from '@/api/user'
+import { message } from '@/libs'
 
 /**
  * 用户模块
@@ -9,11 +11,15 @@ import { loginUser } from '@/api/sys'
 export default {
   namespaced: true,
   state: () => ({
-    token: ''
+    token: '',
+    userInfo: {}
   }),
   mutations: {
     setToken (state, token) {
       state.token = token
+    },
+    setUserInfo (state, userInfo) {
+      state.userInfo = userInfo
     }
   },
   actions: {
@@ -25,6 +31,12 @@ export default {
         password: password ? md5(password) : ''
       })
       context.commit('setToken', data.token)
+      context.dispatch('profile')  // 登录成功后获取用户信息
+    },
+    async profile (context) {  // 获取用户信息
+      const data = await getProfile()
+      context.commit('setUserInfo', data)
+      message('success', `欢迎${data.vipLevel ? ('VIP-' + data.vipLevel + ';用户') : ''}${data.nickname}`, 6000)
     }
   }
 }

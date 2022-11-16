@@ -11,5 +11,7 @@ export default {
     return getters.categorys.findIndex(item => item.id === getters.currentCategory.id)
   },
   historys: state => state.search.historys,  // 搜索历史记录
-  searchText: state => state.app.searchText  // 搜索文本
+  searchText: state => state.app.searchText,  // 搜索文本
+  token: state => state.user.token,
+  userInfo: state => state.user.userInfo
 }
