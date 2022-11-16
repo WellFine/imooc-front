@@ -24,6 +24,7 @@
   import '@/vendor/SliderCaptcha/longbow.slidercaptcha.min.js'
   import '@/vendor/SliderCaptcha/slidercaptcha.min.css'
   import { getCaptcha } from '@/api/sys'
+  import { message } from '@/libs'
 
   const emits = defineEmits(['success', 'close'])
 
@@ -41,6 +42,12 @@
           behavior: arr
         })
         if (res) emits('success')
+        else {
+          message('error', '验证有误，请重试')
+          setTimeout(() => {
+            captcha.reset()
+          }, 100)
+        }
       },
       // onFail () {},  // 用户拼图失败后的回调
       verify (arr, url) {
