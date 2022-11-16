@@ -29,6 +29,11 @@ service.interceptors.response.use(response => {
   }
   // TODO：业务请求错误
   return Promise.reject(new Error(message))
+}, err => {  // 服务端返回非 2xx 状态码时会执行这个回调
+  if (err.response?.data?.code === 401) {  // token 超时
+    store.dispatch('user/logout')
+  }
+  return Promise.reject(err)
 })
 
 export default service
