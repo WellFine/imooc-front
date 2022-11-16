@@ -24,7 +24,10 @@
         <vee-error-message class="text-sm text-main block mt-0.5 ml-1 text-left" name="password" />
         <!-- 跳转注册链接 -->
         <div class="pt-1 pb-3 leading-[0px] text-right">
-          <a class="inline-block pb-1 text-sm text-right text-zinc-400 dark:text-zinc-600 hover:text-main dark:hover:text-zinc-400 duration-300 cursor-pointer">去注册</a>
+          <a
+            class="inline-block pb-1 text-sm text-right text-zinc-400 dark:text-zinc-600 hover:text-main dark:hover:text-zinc-400 duration-300 cursor-pointer"
+            @click="goToRegister"
+          >去注册</a>
         </div>
         <m-button
           class="w-full dark:bg-zinc-900 xl:dark:bg-zinc-800"
@@ -88,5 +91,9 @@
     } finally {
       loading.value = false
     }
+  }
+
+  const goToRegister = () => {
+    router.push('/register')
   }
 </script>
