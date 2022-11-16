@@ -55,11 +55,15 @@
 
 <script setup>
   import { ref } from 'vue'
+  import { useStore } from 'vuex'
   import { useRouter } from 'vue-router'
   import headerVue from '../components/header.vue'
   import { Form as VeeForm, Field as VeeField, ErrorMessage as VeeErrorMessage, defineRule } from 'vee-validate'
   import { validateUsername, validatePassword, validateConfirmPassword } from '../validate'
+  import { LOGIN_TYPE_USERNAME } from '@/constants'
+  import { message } from '@/libs'
 
+  const store = useStore()
   const router = useRouter()
 
   // 定义确认密码的校验规则，因为确认密码需要关联到密码
@@ -76,5 +80,25 @@
     router.push('/login')
   }
 
-  const onRegisterHandler = () => {}
+  const onRegisterHandler = async () => {
+    loading.value = true
+    const payload = {
+      username: registerForm.value.username,
+      password: registerForm.value.password
+    }
+    try {
+      // 注册
+      await store.dispatch('user/register', payload)
+      // 注册成功，触发登录
+      await store.dispatch('user/login', {
+        ...payload,
+        loginType: LOGIN_TYPE_USERNAME
+      })
+      router.push('/')
+    } catch (err) {
+      message('error', err.message)
+    } finally {
+      loading.value = false
+    }
+  }
 </script>

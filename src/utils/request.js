@@ -27,7 +27,7 @@ service.interceptors.response.use(response => {
   if (success) {  // success 为 true 表明业务请求成功
     return data
   }
-  // TODO：业务请求错误
+  // 业务请求错误
   return Promise.reject(new Error(message))
 }, err => {  // 服务端返回非 2xx 状态码时会执行这个回调
   if (err.response?.data?.code === 401) {  // token 超时
