@@ -37,6 +37,11 @@ export default {
       const data = await getProfile()
       context.commit('setUserInfo', data)
       message('success', `欢迎${data.vipLevel ? ('VIP-' + data.vipLevel + ';用户') : ''}${data.nickname}`, 6000)
+    },
+    logout (context) {  // 退出登录
+      context.commit('setToken', '')  // 清空 token
+      context.commit('setUserInfo', {})  // 清空用户信息
+      location.reload()  // 刷新页面，重新加载页面权限
     }
   }
 }
