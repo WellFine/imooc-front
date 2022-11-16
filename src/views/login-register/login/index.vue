@@ -75,8 +75,8 @@
 
   const loading = ref(false)
   const loginForm = ref({
-    username: '',
-    password: ''
+    username: 'cat',
+    password: '123456'
   })
   const onLogin = async () => {
     loading.value = true
