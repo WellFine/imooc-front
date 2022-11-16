@@ -11,6 +11,7 @@
           class="w-full text-base dark:text-zinc-400 dark:bg-zinc-800 xl:dark:bg-zinc-900 border-b border-b-zinc-400 focus:border-b-main dark:focus:border-b-zinc-200 outline-0 pb-1 px-1"
           type="text" placeholder="请输入用户名" autocomplete="on"
           name="username" :rules="validateUsername"
+          v-model="loginForm.username"
         />
         <!-- 用户名输入框的错误提示，name 属性表示和哪个 Field 绑定 -->
         <vee-error-message class="text-sm text-main block mt-0.5 ml-1 text-left" name="username" />
@@ -18,6 +19,7 @@
           class="w-full text-base dark:text-zinc-400 dark:bg-zinc-800 xl:dark:bg-zinc-900 border-b border-b-zinc-400 focus:border-b-main dark:focus:border-b-zinc-200 outline-0 pb-1 px-1"
           type="password" placeholder="请输入密码" autocomplete="on"
           name="password" :rules="validatePassword"
+          v-model="loginForm.password"
         />
         <vee-error-message class="text-sm text-main block mt-0.5 ml-1 text-left" name="password" />
         <!-- 跳转注册链接 -->
@@ -26,7 +28,7 @@
         </div>
         <m-button
           class="w-full dark:bg-zinc-900 xl:dark:bg-zinc-800"
-          :isActiveAnimation="false"
+          :isActiveAnimation="false" :loading="loading"
         >登录</m-button>
       </vee-form>
       <!-- 第三方登录 -->
@@ -44,10 +46,17 @@
 
 <script setup>
   import { ref } from 'vue'
+  import { useStore } from 'vuex'
+  import { useRouter } from 'vue-router'
   import headerVue from '../components/header.vue'
   import { Form as VeeForm, Field as VeeField, ErrorMessage as VeeErrorMessage } from 'vee-validate'
   import { validateUsername, validatePassword } from '../validate'
   import sliderCaptchaVue from './slider-captcha.vue'
+  import { LOGIN_TYPE_USERNAME } from '@/constants'
+  import { message } from '@/libs'
+
+  const store = useStore()
+  const router = useRouter()
 
   const isSliderCaptchaVisable = ref(false)
 
@@ -58,6 +67,26 @@
 
   const onCaptchaSuccess = () => {  // 人类行为验证通过
     isSliderCaptchaVisable.value = false
-    // TODO: 登录操作
+    onLogin()
+  }
+
+  const loading = ref(false)
+  const loginForm = ref({
+    username: '',
+    password: ''
+  })
+  const onLogin = async () => {
+    loading.value = true
+    try {
+      await store.dispatch('user/login', {
+        ...loginForm.value,
+        loginType: LOGIN_TYPE_USERNAME
+      })
+      router.push('/')
+    } catch (err) {
+      message('error', err.message)
+    } finally {
+      loading.value = false
+    }
   }
 </script>

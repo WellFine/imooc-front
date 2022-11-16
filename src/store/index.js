@@ -8,6 +8,7 @@ import category from './modules/category'
 import theme from './modules/theme'
 import app from './modules/app'
 import search from './modules/search'
+import user from './modules/user'
 
 const store = createStore({
   getters,
@@ -15,12 +16,13 @@ const store = createStore({
     category,
     theme,
     app,  // app 中的内容不需要缓存
-    search
+    search,
+    user
   },
   plugins: [
     createPersistedState({  // 使用这个 plugin 后会自动到 localStorage 中加载对应模块的缓存数据
       key: 'imooc-front',  // 指定保存到 localStorage 中的 key
-      paths: ['category', 'theme', 'search']  // 需要保存的模块
+      paths: ['category', 'theme', 'search', 'user']  // 需要保存的模块
     })
   ]
 })
