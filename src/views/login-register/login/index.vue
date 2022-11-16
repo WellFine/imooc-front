@@ -35,16 +35,29 @@
         <m-svg-icon class="w-4 cursor-pointer" name="wexin" />
       </div>
     </div>
+    <slider-captcha-vue
+      v-if="isSliderCaptchaVisable"
+      @success="onCaptchaSuccess" @close="isSliderCaptchaVisable = false"
+    />
   </div>
 </template>
 
 <script setup>
+  import { ref } from 'vue'
   import headerVue from '../components/header.vue'
   import { Form as VeeForm, Field as VeeField, ErrorMessage as VeeErrorMessage } from 'vee-validate'
   import { validateUsername, validatePassword } from '../validate'
+  import sliderCaptchaVue from './slider-captcha.vue'
+
+  const isSliderCaptchaVisable = ref(false)
 
   // 点击按钮触发登录事件，只有表单校验通过才能触发
   const onLoginHandler = () => {
-    console.log('login')
+    isSliderCaptchaVisable.value = true
+  }
+
+  const onCaptchaSuccess = () => {  // 人类行为验证通过
+    isSliderCaptchaVisable.value = false
+    // TODO: 登录操作
   }
 </script>
