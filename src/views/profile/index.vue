@@ -80,7 +80,8 @@
   import { useStore } from 'vuex'
   import { useRouter } from 'vue-router'
   import { isMobileTerminal } from '@/utils/flexible'
-  import { confirm } from '@/libs'
+  import { confirm, message } from '@/libs'
+  import { putProfile } from '@/api/user'
 
   const store = useStore()
   const router = useRouter()
@@ -103,7 +104,18 @@
   const userInfo = ref(store.getters.userInfo)
   // 保存修改
   const loading = ref(false)
-  const onChangeProfile = () => {}
+  const onChangeProfile = async () => {
+    loading.value = true
+    try {
+      await putProfile(userInfo.value)
+      store.commit('user/setUserInfo', userInfo.value)
+      message('success', '用户信息修改成功')
+    } catch (err) {
+      message('error', err.message)
+    } finally {
+      loading.value = false
+    }
+  }
 
   // 移动端退出登录
   const onLogoutClick = () => {
