@@ -72,16 +72,25 @@
         >退出登录</m-button>
       </div>
     </div>
+    <!-- PC 端 dialog 展示 -->
+    <m-dialog v-if="!isMobileTerminal" title="裁剪头像" v-model="isCutVisible">
+      <change-avatar-vue :blob="currentBlob" />
+    </m-dialog>
+    <!-- 移动端 popup 展示 -->
+    <m-popup v-else :class="{ 'h-screen': isCutVisible }" v-model="isCutVisible">
+      <change-avatar-vue :blob="currentBlob" @close="isCutVisible = false" />
+    </m-popup>
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import { useStore } from 'vuex'
   import { useRouter } from 'vue-router'
   import { isMobileTerminal } from '@/utils/flexible'
   import { confirm, message } from '@/libs'
   import { putProfile } from '@/api/user'
+  import changeAvatarVue from './components/change-avatar.vue'
 
   const store = useStore()
   const router = useRouter()
@@ -97,8 +106,26 @@
   const onAvatarClick = () => {
     inputFileTarget.value.click()
   }
-  // 选中文件后的回调
-  const onSelectImgHandler = () => {}
+
+  const isCutVisible = ref(false)  // 裁剪图片展示
+  const currentBlob = ref('')  // 选中图片的 blob 链接
+
+  /**
+   * 选中文件后的回调
+   * 注意：当连续选择同一个文件时，该回调只会在最开始触发一次
+   * 要解决这个问题，需要在每次选择的图片不再使用后，清空文件选择器 inputFileTarget 的值即可
+   */
+  const onSelectImgHandler = () => {
+    const imgFile = inputFileTarget.value.files[0]  // 获取选中的文件
+    const blob = URL.createObjectURL(imgFile)  // 生成 blob 类文件链接对象
+    currentBlob.value = blob
+    isCutVisible.value = true
+  }
+  watch(isCutVisible, val => {
+    if (!val) {  // 裁剪图片弹框消失，证明图片不再使用
+      inputFileTarget.value.value = null  // 清空文件选择器的值
+    }
+  })
 
   // 输入框数据
   const userInfo = ref(store.getters.userInfo)
