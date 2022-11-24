@@ -50,6 +50,8 @@
       confirm('是否退出登录').then(() => {
         store.dispatch('user/logout')
       })
+      return
     }
+    router.push(item.path)
   }
 </script>
