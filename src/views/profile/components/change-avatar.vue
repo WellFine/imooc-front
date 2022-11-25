@@ -27,9 +27,12 @@
 </script>
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { useStore } from 'vuex'
   import { isMobileTerminal } from '@/utils/flexible'
   import Cropper from 'cropperjs'
   import 'cropperjs/dist/cropper.css'
+  import { getOSSClient } from '@/utils/sts'
+  import { message } from '@/libs'
 
   const props = defineProps({
     // 可访问的文件链接
@@ -40,6 +43,8 @@
   })
 
   const emits = defineEmits(['close'])
+
+  const store = useStore()
 
   const close = () => {  // 移动端关闭按钮点击事件
     emits('close')
@@ -60,8 +65,21 @@
     loading.value = true
     // toBlob 拿到裁剪后的图片类文件对象
     cropper.getCroppedCanvas().toBlob(blob => {
-      // URL.createObjectURL 将 blob 转化为浏览器能够浏览的图片地址
-      console.log(URL.createObjectURL(blob))
+      putObjectToOSS(blob)
     })
+  }
+
+  // 进行 OSS 上传
+  let ossClient
+  const putObjectToOSS = async file => {
+    if (!ossClient) ossClient = await getOSSClient()
+    try {
+      const fileType = file.type.split('/').pop()
+      const fileName = `${store.getters.userInfo.username}/${Date.now()}.${fileType}`
+      // put 方法两个参数：存放路径(包含名称)，上传的文件
+      const res = await ossClient.put(`images/${fileName}`, file)
+    } catch (e) {
+      message('error', e)
+    }
   }
 </script>
