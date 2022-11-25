@@ -3,6 +3,7 @@ import './styles/index.scss'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
+import './permission'  // 路由守卫权限
 import { useREM } from '@/utils/flexible'
 import useTheme from '@/utils/theme'
 import mLibs from './libs'
