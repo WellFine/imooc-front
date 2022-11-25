@@ -33,6 +33,7 @@
   import 'cropperjs/dist/cropper.css'
   import { getOSSClient } from '@/utils/sts'
   import { message } from '@/libs'
+  import { putProfile } from '@/api/user'
 
   const props = defineProps({
     // 可访问的文件链接
@@ -46,7 +47,7 @@
 
   const store = useStore()
 
-  const close = () => {  // 移动端关闭按钮点击事件
+  const close = () => {  // 关闭事件
     emits('close')
   }
 
@@ -78,8 +79,27 @@
       const fileName = `${store.getters.userInfo.username}/${Date.now()}.${fileType}`
       // put 方法两个参数：存放路径(包含名称)，上传的文件
       const res = await ossClient.put(`images/${fileName}`, file)
+      onChangeProfile(res.url)
     } catch (e) {
       message('error', e)
+    }
+  }
+
+  // 上传新头像到服务器
+  const onChangeProfile = async avatar => {
+    try {
+      // 本地更新数据
+      store.commit('user/setUserInfo', {
+        ...store.getters.userInfo,
+        avatar
+      })
+      // 服务器更新数据
+      await putProfile(store.getters.userInfo)
+      message('success', '用户头像修改成功')
+      loading.value = false
+      close()
+    } catch (e) {
+      message('error', `用户头像修改失败，${e}`)
     }
   }
 </script>

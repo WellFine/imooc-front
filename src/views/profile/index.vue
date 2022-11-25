@@ -74,7 +74,7 @@
     </div>
     <!-- PC 端 dialog 展示 -->
     <m-dialog v-if="!isMobileTerminal" title="裁剪头像" v-model="isCutVisible">
-      <change-avatar-vue :blob="currentBlob" />
+      <change-avatar-vue :blob="currentBlob" @close="isCutVisible = false" />
     </m-dialog>
     <!-- 移动端 popup 展示 -->
     <m-popup v-else :class="{ 'h-screen': isCutVisible }" v-model="isCutVisible">
