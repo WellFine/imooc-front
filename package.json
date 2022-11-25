@@ -11,6 +11,7 @@
   "dependencies": {
     "@vueuse/core": "^9.3.0",
     "axios": "^1.1.2",
+    "cropperjs": "1.5.12",
     "driver.js": "^0.9.8",
     "file-saver": "^2.0.5",
     "gsap": "^3.11.3",

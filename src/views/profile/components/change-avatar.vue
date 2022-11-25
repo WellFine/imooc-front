@@ -7,12 +7,29 @@
       @click="close"
     />
     <img :src="blob" ref="imageTarget" />
-    <m-button class="mt-3 w-[80%] xl:w-1/2" @click="onConfirmClick">确定</m-button>
+    <m-button class="mt-3 w-[80%] xl:w-1/2" :loading="loading" @click="onConfirmClick">确定</m-button>
   </div>
 </template>
 
+<script>
+  // PC 端配置对象
+  const pcOptions = {
+    aspectRatio: 1  // 裁剪框纵横比 1:1
+  }
+  // 移动端配置对象
+  const mobileOptions = {
+    viewMode: 1,  // 将裁剪框限制在画布的大小
+    dragMode: 'move',  // 移动画布，裁剪框不动
+    aspectRatio: 1,  // 裁剪框纵横比 1:1
+    cropBoxMovable: false,  // 裁剪框不可移动
+    cropBoxResizable: false  // 裁剪框不能调整大小
+  }
+</script>
 <script setup>
+  import { ref, onMounted } from 'vue'
   import { isMobileTerminal } from '@/utils/flexible'
+  import Cropper from 'cropperjs'
+  import 'cropperjs/dist/cropper.css'
 
   const props = defineProps({
     // 可访问的文件链接
@@ -28,5 +45,23 @@
     emits('close')
   }
 
-  const onConfirmClick = () => {}  // 确定按钮点击事件
+  // 图片裁剪
+  const imageTarget = ref(null)
+  let cropper
+  onMounted(() => {
+    cropper = new Cropper(
+      imageTarget.value,
+      isMobileTerminal.value ? mobileOptions : pcOptions
+    )
+  })
+
+  const loading = ref(false)
+  const onConfirmClick = () => {  // 确定按钮点击事件
+    loading.value = true
+    // toBlob 拿到裁剪后的图片类文件对象
+    cropper.getCroppedCanvas().toBlob(blob => {
+      // URL.createObjectURL 将 blob 转化为浏览器能够浏览的图片地址
+      console.log(URL.createObjectURL(blob))
+    })
+  }
 </script>
