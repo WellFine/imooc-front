@@ -24,10 +24,6 @@ export default defineConfig({
       '/api': {  // 代理所有 /api 请求
         target: 'https://api.imooc-front.lgdsunday.club/',  // 代理后的请求地址
         changeOrigin: true  // 开启跨域
-      },
-      '/prod-api': {
-        target: 'https://imooc-front.lgdsunday.club/',
-        changeOrigin: true
       }
     }
   }
