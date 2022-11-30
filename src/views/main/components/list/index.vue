@@ -93,7 +93,7 @@
 
   const onToPins = item => {
     // 修改浏览器的 url，但不会加载 url
-    history.pushState(null, null, `/pins/${item.id}`)
+    history.pushState(null, null, `#/pins/${item.id}`)
     isVisablePins.value = true
     currentPins.value = item
   }
