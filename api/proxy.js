@@ -1,6 +1,6 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
-module.exports = (req, res) => {
+export default (req, res) => {
   // 接口请求是以 /prod-api 开头的，不是请求的直接返回
   if (!req.url.startsWith('/prod-api')) return
 
