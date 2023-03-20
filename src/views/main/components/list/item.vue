@@ -59,7 +59,7 @@
   const emits = defineEmits(['click'])
 
   const onDownload = () => {
-    message('success', '开始下载图片')
+    message('success', '开始下载图片，图片素材来自国外网站，下载较慢')
     // saveAs 传入图片链接即可下载图片
     setTimeout(() => {  // 延迟一会再下载，让用户看到提示，体验更好
       saveAs(props.data.photoDownLink)
