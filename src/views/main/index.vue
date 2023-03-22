@@ -30,6 +30,11 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name: 'home'  // 给组件添加 name 选项，用于 keep-alive 的 include 数组元素匹配进行缓存
+  }
+</script>
 <script setup>
   import { useRouter } from 'vue-router'
   import { useStore } from 'vuex'
@@ -45,3 +50,5 @@
     router.push(store.getters.token ? '/profile' : '/login')
   }
 </script>
+
+<style></style>
