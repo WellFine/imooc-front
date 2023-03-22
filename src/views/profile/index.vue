@@ -2,7 +2,7 @@
   <div class="h-full bg-zinc-200 dark:bg-zinc-800 duration-500 overflow-auto xl:pt-1">
     <div class="relative max-w-screen-lg mx-auto bg-white dark:bg-zinc-900 duration-500 xl:rounded-sm xl:border xl:border-zinc-200 xl:dark:border-zinc-600 xl:px-4 xl:py-2">
       <!-- 移动端 navbar -->
-      <m-navbar v-if="isMobileTerminal" sticky>个人资料</m-navbar>
+      <m-navbar v-if="isMobileTerminal" sticky :clickLeft="onNavbarLeftClick">个人资料</m-navbar>
       <!-- PC 端标题 -->
       <div v-else class="text-center text-lg font-bold mb-4 dark:text-zinc-300">个人资料</div>
       <div class="h-full w-full xl:w-2/3 px-1 pb-4 text-sm xl:text-center">
@@ -86,12 +86,21 @@
 <script setup>
   import { ref, watch } from 'vue'
   import { useStore } from 'vuex'
+  import { useRouter } from 'vue-router'
   import { isMobileTerminal } from '@/utils/flexible'
   import { confirm, message } from '@/libs'
   import { putProfile } from '@/api/user'
   import changeAvatarVue from './components/change-avatar.vue'
 
   const store = useStore()
+  const router = useRouter()
+
+  // 移动端 navbar 左侧点击事件
+  const onNavbarLeftClick = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'back')
+    router.back()
+  }
 
   // 头像文件隐藏域元素
   const inputFileTarget = ref(null)

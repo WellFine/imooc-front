@@ -40,7 +40,10 @@
   const slots = useSlots() 
   const router = useRouter()
   const onClickLeft = () => {
-    if (props.clickLeft) props.clickLeft()
+    if (props.clickLeft) {
+      props.clickLeft()
+      return
+    }
     // 没传 left 插槽默认显示回退按钮，执行回退事件
     if (!slots.left) router.back()
   }

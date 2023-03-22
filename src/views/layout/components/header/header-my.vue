@@ -43,6 +43,8 @@
   const router = useRouter()
 
   const goToLogin = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
     router.push('/login')
   }
 
@@ -53,6 +55,8 @@
       })
       return
     }
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
     router.push(item.path)
   }
 </script>

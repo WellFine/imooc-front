@@ -23,8 +23,8 @@
       icon="vip" iconClass="fill-zinc-400 dark:fill-zinc-500" textClass="text-zinc-400 dark:text-zinc-500"
     >VIP</m-trigger-menu-item>
     <m-trigger-menu-item
-      icon="profile" iconClass="fill-zinc-400 dark:fill-zinc-500"
-      textClass="text-zinc-400 dark:text-zinc-500" :to="$store.getters.token ? '/profile' : '/login'" 
+      icon="profile" iconClass="fill-zinc-400 dark:fill-zinc-500" textClass="text-zinc-400 dark:text-zinc-500"
+      @click="onMyClick"
     >
       {{ $store.getters.token ? '我的' : '去登录' }}
     </m-trigger-menu-item>
@@ -32,7 +32,17 @@
 </template>
 
 <script setup>
+  import { useRouter } from 'vue-router'
+  import { useStore } from 'vuex'
   import { isMobileTerminal } from '@/utils/flexible'
   import navigationVue from './components/navigation/index.vue'
   import listVue from './components/list/index.vue'
+
+  const router = useRouter()
+  const store = useStore()
+  const onMyClick = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
+    router.push(store.getters.token ? '/profile' : '/login')
+  }
 </script>
