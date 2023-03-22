@@ -1,8 +1,12 @@
 <template>
   <router-view v-slot="{ Component }">
-    <transition :name="transitionName">
+    <transition
+      :name="transitionName"
+      @before-enter="beforeEnter"
+      @after-leave="afterLeave"
+    >
       <keep-alive>
-        <component :is="Component" />
+        <component :is="Component" :class="{ 'fixed top-0 left-0 w-screen z-50': isAnimation }" />
       </keep-alive>
     </transition>
   </router-view>
@@ -42,6 +46,15 @@
     // 路由跳转前确定动画类型
     transitionName.value = props.routerType
   })
+
+  // 处理动画状态，使新页面能够正常展示动画
+  const isAnimation = ref(false)
+  const beforeEnter = () => {
+    isAnimation.value = true
+  }
+  const afterLeave = () => {
+    isAnimation.value = false
+  }
 </script>
 
 <style lang="scss" scoped>
