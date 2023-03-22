@@ -1,6 +1,9 @@
 <!-- 移动端首页和 PC 端 layout 页面的二级路由页面 -->
 <template>
-  <div class="h-full overflow-auto bg-white dark:bg-zinc-800 duration-500 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-transparent xl:scrollbar-thumb-zinc-200 xl:dark:scrollbar-thumb-zinc-900 scrollbar-track-transparent">
+  <div
+    class="h-full overflow-auto bg-white dark:bg-zinc-800 duration-500 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-transparent xl:scrollbar-thumb-zinc-200 xl:dark:scrollbar-thumb-zinc-900 scrollbar-track-transparent"
+    ref="containerTarget"
+  >
     <!--
       scrollbar-thin 窄滚动条
       scrollbar-thumb-rounded 设置圆角滚动条
@@ -36,8 +39,10 @@
   }
 </script>
 <script setup>
+  import { ref, onActivated } from 'vue'
   import { useRouter } from 'vue-router'
   import { useStore } from 'vuex'
+  import { useScroll } from '@vueuse/core'
   import { isMobileTerminal } from '@/utils/flexible'
   import navigationVue from './components/navigation/index.vue'
   import listVue from './components/list/index.vue'
@@ -49,6 +54,14 @@
     store.commit('app/changeRouterType', 'push')
     router.push(store.getters.token ? '/profile' : '/login')
   }
+
+  const containerTarget = ref(null)
+  const { y: containerTargetScrollY } = useScroll(containerTarget)
+  // keep-alive 缓存的组件再次可见时，会触发 onActivated 钩子
+  onActivated(() => {
+    if (!containerTarget.value) return
+    containerTarget.value.scrollTop = containerTargetScrollY.value
+  })
 </script>
 
 <style></style>
