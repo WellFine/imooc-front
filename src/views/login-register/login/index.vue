@@ -94,6 +94,8 @@
   }
 
   const goToRegister = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
     router.push('/register')
   }
 </script>

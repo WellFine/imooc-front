@@ -13,7 +13,7 @@
         <m-button icon="profile" iconColor="#fff" @click="goToLogin" />
       </div>
     </template>
-    <!-- 气泡，用户未登录时鼠标移入不显示 -->
+    <!-- 气泡区域，登录后展示操作列表 -->
     <div v-if="$store.getters.token" class="w-[140px] overflow-hidden">
       <div
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-900"
@@ -24,6 +24,7 @@
         <span class="text-zinc-800 dark:text-zinc-300 text-sm">{{ item.title }}</span>
       </div>
     </div>
+    <div v-else class="text-zinc-800 dark:text-zinc-300 text-sm w-[150px] text-center cursor-pointer" @click="goToLogin">登录体验更多功能</div>
   </m-popover>
 </template>
 
@@ -42,6 +43,8 @@
   const router = useRouter()
 
   const goToLogin = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
     router.push('/login')
   }
 
@@ -52,6 +55,8 @@
       })
       return
     }
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
     router.push(item.path)
   }
 </script>

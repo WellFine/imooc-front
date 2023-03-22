@@ -1,3 +1,5 @@
+import { isMobileTerminal } from '@/utils/flexible'
+
 /**
  * 全局状态访问处理
  * getter 可以认为是 state 的计算属性
@@ -13,5 +15,10 @@ export default {
   historys: state => state.search.historys,  // 搜索历史记录
   searchText: state => state.app.searchText,  // 搜索文本
   token: state => state.user.token,
-  userInfo: state => state.user.userInfo
+  userInfo: state => state.user.userInfo,
+  routerType: state => {  // 路由跳转的动画类型
+    // PC 端没有跳转动画
+    if (!isMobileTerminal.value) return 'none'
+    return state.app.routerType
+  }
 }

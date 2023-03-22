@@ -5,7 +5,8 @@ export default {
   namespaced: true,  // 独立作用域
   state: () => ({
     currentCategory: ALL_CATEGORY_ITEM,  // navigation 当前选中的 item 项
-    searchText: ''  // 搜索的文本
+    searchText: '',  // 搜索的文本
+    routerType: 'none'  // 路由跳转动画类型
   }),
   mutations: {
     changeCurrentCategory: (state, category) => {
@@ -13,6 +14,9 @@ export default {
     },
     changeSearchText (state, text) {
       state.searchText = text
+    },
+    changeRouterType (state, type) {
+    state.routerType = type
     }
   }
 }

@@ -97,6 +97,8 @@
 
   // 移动端 navbar 左侧点击事件
   const onNavbarLeftClick = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'back')
     router.back()
   }
 
