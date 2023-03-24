@@ -16,6 +16,13 @@ export default [{
     meta: {
       user: true  // 标记当前页面只有用户登录后才能进入
     }
+  }, {
+    path: '/member',
+    name: 'member',
+    component: () => import('@/views/member/index.vue'),
+    meta: {
+      user: true  // 标记当前页面只有用户登录后才能进入
+    }
   }]
 }, {
   path: '/pins/:id',

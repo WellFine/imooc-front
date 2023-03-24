@@ -22,6 +22,7 @@
       <m-trigger-menu-item
         v-if="$store.getters.token"
         icon="vip" iconClass="fill-zinc-400 dark:fill-zinc-500" textClass="text-zinc-400 dark:text-zinc-500"
+        @click="onVipClick"
       >VIP</m-trigger-menu-item>
       <m-trigger-menu-item
         icon="profile" iconClass="fill-zinc-400 dark:fill-zinc-500" textClass="text-zinc-400 dark:text-zinc-500"
@@ -49,6 +50,11 @@
 
   const router = useRouter()
   const store = useStore()
+  const onVipClick = () => {
+    // 设置路由跳转的动画类型
+    store.commit('app/changeRouterType', 'push')
+    router.push('/member')
+  }
   const onMyClick = () => {
     // 设置路由跳转的动画类型
     store.commit('app/changeRouterType', 'push')
