@@ -14,6 +14,7 @@
           />
         </div>
         <p class="mt-1 text-sm text-zinc-500">{{ currentPayData.desc }}</p>
+        <payment-vue class="mt-4" />
       </div>
     </div>
   </div>
@@ -26,6 +27,7 @@
   import { getVipPayList } from '@/api/pay'
   import { isMobileTerminal } from '@/utils/flexible'
   import payMenuItem from './components/pay-menu-item.vue'
+  import paymentVue from './components/payment/index.vue'
 
   const vipPayListData = ref([])  // 所有支付套餐
   const currentPayData = ref({})
