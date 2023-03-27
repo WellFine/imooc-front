@@ -10,6 +10,7 @@ const { width } = useWindowSize()
  * 不用正则表达式结合 navigator.userAgent 来判断是因为要进行响应式的视图处理
  */
 export const isMobileTerminal = computed(() => width.value < PC_DEVICE_WIDTH)
+// export const isMobileTerminal = computed(() => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
 
 /**
  * 动态指定 rem 基准值 font-size 为屏幕宽度的十分之一，最大值为 40px
