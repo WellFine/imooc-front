@@ -40,3 +40,6 @@ export const LOGIN_TYPE_USERNAME = 'username'
 // STS 上传数据
 export const REGION = 'oss-cn-beijing'  // bucket 存储桶所在区域
 export const BUCKET = 'imooc-front'  // bucket 名字
+
+// 兔小巢反馈地址
+export const FEEDBACK_URL = 'https://support.qq.com/product/537865'
